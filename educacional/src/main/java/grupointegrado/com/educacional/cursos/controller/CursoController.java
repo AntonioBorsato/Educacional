@@ -21,14 +21,6 @@ public class CursoController {
         return ResponseEntity.ok(this.repository.findAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Curso> findById(@PathVariable Integer id) {
-        Curso curso = this.repository.findById(Long.valueOf(id))
-                .orElseThrow(() -> new IllegalArgumentException("Curso não encontrado com o ID especificado"));
-
-        return ResponseEntity.ok(curso);
-    }
-
     @GetMapping("/codigo/{codigo}")
     public ResponseEntity<Curso> findByCodigo(@PathVariable String codigo) {
         Curso curso = this.repository.findByCodigo(codigo)

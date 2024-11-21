@@ -21,18 +21,9 @@ public class ProfessorController {
         return ResponseEntity.ok(this.repository.findAll());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Professor> findById(@PathVariable Integer id) {
-        Professor professor = this.repository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Professor não encontrado"));
-        return ResponseEntity.ok(professor);
-    }
-
     @PostMapping
     public Professor save(@RequestBody ProfessorRequestDTO dto) {
-        if (this.repository.findByNome(dto.nome()).isPresent()) {
-            throw new IllegalArgumentException("O Professor não pode ser criado: já existe um professor com o mesmo nome " + dto.nome());
-        }
+
         Professor professor = new Professor();
         professor.setNome(dto.nome());
         professor.setEmail(dto.email());
@@ -43,8 +34,7 @@ public class ProfessorController {
     }
 
     @PutMapping("/{id}")
-    public Professor update(@PathVariable Integer id,
-                            @RequestBody ProfessorRequestDTO dto) {
+    public Professor update(@PathVariable Integer id, @RequestBody ProfessorRequestDTO dto) {
         Professor professor = this.repository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Professor não encontrado"));
 
